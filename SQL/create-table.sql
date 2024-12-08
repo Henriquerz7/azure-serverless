@@ -1,0 +1,6 @@
+
+CREATE TABLE Mensagens (
+    Id INT IDENTITY PRIMARY KEY,
+    Conteudo NVARCHAR(MAX),
+    DataCriacao DATETIME DEFAULT GETDATE()
+);

@@ -1,0 +1,39 @@
+
+{
+    "definition": {
+        "triggers": {
+            "httpTrigger": {
+                "type": "Request",
+                "inputs": {
+                    "method": "POST",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "conteudo": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "conteudo"
+                        ]
+                    }
+                }
+            }
+        },
+        "actions": {
+            "enqueueMessage": {
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['azurequeues']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/queues/@{encodeURIComponent('mensagens')}/messages",
+                    "body": "@triggerBody()?['conteudo']"
+                }
+            }
+        }
+    }
+}
